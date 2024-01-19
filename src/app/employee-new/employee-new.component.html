@@ -1,0 +1,8 @@
+<label for="name">Nome</label>
+<input type="text" name="name" id="name" [(ngModel)]="name"  />
+
+<label for="salary">Salario</label>
+<input type="text" salary="salary" id="salary" [(ngModel)]="salary" [style.border]="salary > 10 ? '1px solid red' : ''" [style.outline]="getOutlineColor()"  />
+
+<button (click)="addEmployee()">novo</button>
+
