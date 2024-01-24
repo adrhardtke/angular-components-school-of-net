@@ -3,37 +3,47 @@
         {{ i }} {{employee}} <span *ngIf="isFirst">-- MAIN</span>
     </li>
 </ul> -->
+<alert-success [hidden]="!showMessageSuccess">
+    O empregado <strong>{{employee?.name}}</strong> foi cadastrado com sucesso!
+</alert-success>
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td colspan="3">
+                        <button class="btn btn-primary" (click)="openNewModal()">Novo empregado</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nome</th>
+                    <th>Salario</th>
+                    <th>Bonus</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (employee of employees; track employee.name) {
+                    <tr>
+                        <td>{{ employee.name }}</td>
+                        <!-- <td [ngClass]="{'salary-expensive': employee.salary > 20}">{{ employee.salary }}</td> -->
+                        <td [salaryColor]="employee.salary">{{ employee.salary | myCurrency }}</td>
+                        <td>{{ employee.bonus }}</td>
+                        <td>
+                            <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a>
+                        </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <td colspan="3">
-                <button class="btn btn-primary" (click)="openNewModal()">Novo empregado</button>
-            </td>
-        </tr>
-        <tr>
-            <th>Nome</th>
-            <th>Salario</th>
-            <th>Bonus</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (employee of employees; track employee.name) {
-            <tr>
-                <td>{{ employee.name }}</td>
-                <!-- <td [ngClass]="{'salary-expensive': employee.salary > 20}">{{ employee.salary }}</td> -->
-                <td salaryColor="{{employee.salary}}">{{ employee.salary }}</td>
-            </tr>
-          } @empty {
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-        }
-    </tbody>
-
-
-    <employee-new-modal></employee-new-modal>   
-
-</table>
+<employee-new-modal (onSubmit)="onNewEmployee($event)"></employee-new-modal>   
+<employee-edit-modal (onSubmit)="onEditEmployee($event)" [employee]="employeeToEdit"></employee-edit-modal>   

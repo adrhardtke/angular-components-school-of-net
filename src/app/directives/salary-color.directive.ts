@@ -1,20 +1,20 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
   selector: '[salaryColor]',
   standalone: true
 })
-export class SalaryColorDirective implements OnInit {
-  @Input()
-  salaryColor!: string;
+export class SalaryColorDirective {
 
   constructor(private element: ElementRef) {
   }
 
-  ngOnInit(): void {      
+
+  @Input()
+  set salaryColor(value: number){
     const { nativeElement }: { nativeElement: HTMLElement} = this.element
-    const salaryColor = parseFloat(this.salaryColor)
-    nativeElement.style.color = salaryColor > 20 ? 'green' : 'red'
+    // const salaryColor = parseFloat(value)
+    nativeElement.style.color = value > 20 ? 'green' : 'red'
   }
 
 }
